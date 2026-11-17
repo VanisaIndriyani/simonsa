@@ -38,13 +38,19 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin',
             'status' => 'aktif',
         ]);
-        $keamanan = Pengguna::create([
-            'nama_user' => 'Ust. Ridwan Setiawan',
-            'username' => 'keamanan',
-            'password' => 'keamanan123',
-            'role' => 'keamanan',
-            'status' => 'aktif',
-        ]);
+        $keamanan = null;
+        foreach ([1, 2, 3, 4] as $urut) {
+            $akun = Pengguna::firstOrCreate(
+                ['username' => 'keamanan'.$urut],
+                [
+                    'nama_user' => 'Keamanan '.$urut,
+                    'password' => 'keamanan123',
+                    'role' => 'keamanan',
+                    'status' => 'aktif',
+                ]
+            );
+            $keamanan ??= $akun;
+        }
         Pengguna::create([
             'nama_user' => 'Muhammad Luthfi',
             'username' => 'lurah',

@@ -145,14 +145,16 @@
 @push('scripts')
 <script src="{{ asset('vendor/chartjs/chart.umd.min.js') }}"></script>
 <script>
+    const warna = ['#1b8f4a', '#e0a11a', '#c2410c', '#b42318', '#14657a', '#4c3bb5', '#1aa58a', '#d4537e'];
+    const bulan = @json($nilaiBulan);
     new Chart(document.getElementById('grafikBulan'), {
         type: 'bar',
         data: {
             labels: @json($labelBulan),
             datasets: [{
                 label: 'Pelanggaran',
-                data: @json($nilaiBulan),
-                backgroundColor: '#1b8f4a',
+                data: bulan,
+                backgroundColor: bulan.map((_, i) => warna[i % warna.length]),
                 borderRadius: 8
             }]
         },

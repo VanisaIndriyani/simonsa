@@ -109,5 +109,6 @@ Route::middleware(['auth', 'aktif'])->group(function () {
     Route::middleware('role:admin')->group(function () {
         Route::get('/pengguna', [PenggunaController::class, 'index'])->name('pengguna.index');
         Route::get('/aktivitas-login', [AktivitasController::class, 'index'])->name('aktivitas.index');
+        Route::post('/laporan/catat-cetak', [LaporanController::class, 'catatCetak'])->name('laporan.cetak');
     });
 });

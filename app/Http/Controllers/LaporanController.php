@@ -12,6 +12,10 @@ class LaporanController extends Controller
 {
     public function index(Request $request, RekapService $rekap)
     {
+        if ($request->user()->role === 'keamanan') {
+            abort(403);
+        }
+
         $filter = $request->only(['q', 'id_kategori', 'kelas', 'dari', 'sampai']);
         $data = $rekap->query($filter)
             ->with(['santri', 'kategori', 'pengguna'])
@@ -31,5 +35,10 @@ class LaporanController extends Controller
         $batas = PoinService::batas();
 
         return view('laporan.index', compact('data', 'chart', 'kategori', 'kelas', 'filter', 'ringkas', 'batas'));
+    }
+
+    public function catatCetak()
+    {
+        return response()->noContent();
     }
 }

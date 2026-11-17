@@ -36,7 +36,9 @@
         <div class="menu-grup">Pemantauan</div>
         {!! $item('Riwayat Pelanggaran', 'riwayat.index', 'bi-clock-history', 'riwayat.*') !!}
         {!! $item('Akumulasi Poin', 'poin.index', 'bi-123', 'poin.*') !!}
-        {!! $item('Laporan & Grafik', 'laporan.index', 'bi-bar-chart', 'laporan.*') !!}
+        @if($user->role !== 'keamanan')
+            {!! $item('Laporan & Grafik', 'laporan.index', 'bi-bar-chart', 'laporan.*') !!}
+        @endif
         @if($user->petugas())
             {!! $item('Notifikasi', 'notifikasi.index', 'bi-bell', 'notifikasi.*') !!}
         @endif
@@ -44,7 +46,7 @@
         @if($user->admin())
             <div class="menu-grup">Sistem</div>
             {!! $item('Pengguna', 'pengguna.index', 'bi-person-badge', 'pengguna.*') !!}
-            {!! $item('Aktivitas Login', 'aktivitas.index', 'bi-person-check', 'aktivitas.*') !!}
+            {!! $item('Log Aktivitas', 'aktivitas.index', 'bi-person-check', 'aktivitas.*') !!}
             {!! $item('Pengaturan Sistem', 'pengaturan.index', 'bi-gear', 'pengaturan.*') !!}
             {!! $item('Backup Database', 'backup.index', 'bi-database', 'backup.*') !!}
         @endif

@@ -30,10 +30,13 @@ button, input, select, textarea { font-family: inherit; }
     position: fixed;
     inset: 0 auto 0 0;
     width: var(--sidebar);
+    height: 100vh;
+    height: 100dvh;
     background: var(--hitam);
     color: #d7e0da;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
     z-index: 40;
     transition: transform .2s ease;
 }
@@ -61,20 +64,18 @@ button, input, select, textarea { font-family: inherit; }
 }
 .brand strong { display: block; color: white; letter-spacing: .08em; font-size: 15px; }
 .brand span { display: block; color: #9eada6; font-size: 12px; line-height: 1.35; margin-top: 2px; }
-.sidebar, .menu {
-    scrollbar-width: none;
-}
-.sidebar::-webkit-scrollbar, .menu::-webkit-scrollbar {
-    width: 0;
-    height: 0;
-}
 .menu {
-    padding: 14px 12px;
-    overflow: auto;
-    flex: 1;
+    padding: 8px 10px 12px;
+    overflow-y: auto;
+    flex: 1 1 auto;
+    min-height: 0;
+    scrollbar-width: thin;
+    scrollbar-color: #5d6b64 transparent;
 }
+.menu::-webkit-scrollbar { width: 8px; }
+.menu::-webkit-scrollbar-thumb { background: #5d6b64; border-radius: 8px; }
 .menu-grup {
-    margin: 14px 10px 6px;
+    margin: 10px 10px 4px;
     font-size: 11px;
     letter-spacing: .12em;
     text-transform: uppercase;
@@ -87,8 +88,8 @@ button, input, select, textarea { font-family: inherit; }
     color: #d5ded8;
     text-decoration: none;
     border-radius: 12px;
-    padding: 10px 12px;
-    margin-bottom: 4px;
+    padding: 8px 12px;
+    margin-bottom: 2px;
     font-size: 14.5px;
 }
 .menu a i { font-size: 17px; width: 20px; }

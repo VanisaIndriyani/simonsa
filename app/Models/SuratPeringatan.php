@@ -58,8 +58,9 @@ class SuratPeringatan extends Model
 
     public static function templateIsi(Santri $santri, string $tingkat, int $poin): string
     {
-        return "Berdasarkan catatan pelanggaran di SIMONSA, santri atas nama {$santri->nama_santri} (NIS {$santri->nis}), kelas {$santri->kelas}, kamar {$santri->kamar}, telah mencapai akumulasi {$poin} poin.\n\n"
-            ."Dengan ini diterbitkan {$tingkat} sebagai peringatan resmi. Santri diminta menghentikan pelanggaran dan mengikuti pembinaan bagian keamanan.\n\n"
-            .'Keputusan sanksi akhir tetap dilakukan di luar sistem oleh pengasuh pondok.';
+        return "Assalamu'alaikum warahmatullahi wabarakatuh.\n\n"
+            ."Yang bertanda tangan di bawah ini, Bagian Keamanan pondok, menyampaikan bahwa santri atas nama {$santri->nama_santri} (NIS {$santri->nis}), kelas {$santri->kelas}, kamar {$santri->kamar}, telah mencapai akumulasi {$poin} poin.\n\n"
+            ."Dengan ini diterbitkan {$tingkat}. Santri diminta menghentikan pelanggaran dan mengikuti pembinaan. Keputusan sanksi lebih lanjut ditetapkan oleh pengasuh pondok.\n\n"
+            .'Wassalamu\'alaikum warahmatullahi wabarakatuh.';
     }
 }

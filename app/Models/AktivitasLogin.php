@@ -46,6 +46,13 @@ class AktivitasLogin extends Model
             'alamat_ip' => $ip,
             'waktu' => now(),
         ]);
+
+        $kalimat = match ($jenis) {
+            'masuk' => 'Masuk ke sistem',
+            'keluar' => 'Keluar dari sistem',
+            default => 'Gagal masuk ke sistem',
+        };
+        LogAktivitas::catat($pengguna, $jenis, $kalimat, $pengguna?->nama_user ?: $username);
     }
 
     public function namaRole(): string

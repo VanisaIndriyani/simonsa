@@ -4,7 +4,9 @@
 @section('subjudul', 'Rekap pelanggaran sesuai saringan')
 
 @section('aksi')
-    <button class="btn-putih" type="button" onclick="window.print()">Cetak laporan</button>
+    @if(auth()->user()->admin())
+        <button class="btn-putih" id="cetakLaporan" type="button" data-url="{{ route('laporan.cetak') }}" data-token="{{ csrf_token() }}">Cetak laporan</button>
+    @endif
 @endsection
 
 @section('content')
@@ -112,15 +114,24 @@
 @push('scripts')
 <script src="{{ asset('vendor/chartjs/chart.umd.min.js') }}"></script>
 <script>
-    const hijau = ['#1b8f4a', '#146c38', '#101418', '#7dcea0', '#3d8f62', '#c5d9cc', '#0f3d24', '#8fb9a0'];
+    const warna = ['#1b8f4a', '#e0a11a', '#c2410c', '#b42318', '#14657a', '#4c3bb5', '#1aa58a', '#d4537e', '#3d5a80', '#8a6a2f'];
+    const bulan = @json($chart['nilaiBulan']);
     new Chart(document.getElementById('grafikBulan'), {
         type: 'bar',
-        data: { labels: @json($chart['labelBulan']), datasets: [{ data: @json($chart['nilaiBulan']), backgroundColor: '#1b8f4a', borderRadius: 8 }] },
+        data: { labels: @json($chart['labelBulan']), datasets: [{ data: bulan, backgroundColor: bulan.map((_, i) => warna[i % warna.length]), borderRadius: 8 }] },
         options: { maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { precision: 0 } } } }
+    });
+    document.getElementById('cetakLaporan')?.addEventListener('click', async (event) => {
+        const tombol = event.currentTarget;
+        await fetch(tombol.dataset.url, {
+            method: 'POST',
+            headers: { 'X-CSRF-TOKEN': tombol.dataset.token, 'Accept': 'application/json' }
+        });
+        window.print();
     });
     new Chart(document.getElementById('grafikKategori'), {
         type: 'doughnut',
-        data: { labels: @json($chart['labelKategori']), datasets: [{ data: @json($chart['nilaiKategori']), backgroundColor: hijau }] },
+        data: { labels: @json($chart['labelKategori']), datasets: [{ data: @json($chart['nilaiKategori']), backgroundColor: warna }] },
         options: {
             maintainAspectRatio: false,
             cutout: '58%',

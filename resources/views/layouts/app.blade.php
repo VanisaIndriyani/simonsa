@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{ asset('vendor/bootstrap/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/simonsa.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/sweetalert2/sweetalert2.min.css') }}">
 </head>
 <body>
     @include('partials.sidebar')
@@ -42,6 +43,7 @@
         </div>
     </div>
     <script src="{{ asset('vendor/bootstrap/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('vendor/sweetalert2/sweetalert2.min.js') }}"></script>
     <script>
         const toggle = document.getElementById('toggleSidebar');
         const backdrop = document.getElementById('backdrop');
@@ -58,11 +60,34 @@
             });
         });
 
+        @if(session('sukses'))
+        Swal.fire({ icon: 'success', title: 'Berhasil', text: @json(session('sukses')), confirmButtonColor: '#1b8f4a' });
+        @elseif(session('gagal'))
+        Swal.fire({ icon: 'error', title: 'Gagal', text: @json(session('gagal')), confirmButtonColor: '#b42318' });
+        @elseif(session('peringatan'))
+        Swal.fire({ icon: 'warning', title: 'Perhatian', text: @json(session('peringatan')), confirmButtonColor: '#e0a11a' });
+        @endif
+
         document.querySelectorAll('form').forEach((form) => {
             const metode = form.querySelector('input[name="_method"]');
             if (metode && metode.value === 'DELETE') {
                 form.addEventListener('submit', (e) => {
-                    if (!confirm('Anda yakin ingin menghapus data ini?')) e.preventDefault();
+                    if (form.dataset.yakin === '1') return;
+                    e.preventDefault();
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Hapus data?',
+                        text: 'Anda yakin ingin menghapus data ini?',
+                        showCancelButton: true,
+                        confirmButtonText: 'Hapus',
+                        cancelButtonText: 'Batal',
+                        confirmButtonColor: '#b42318',
+                        cancelButtonColor: '#6b7280'
+                    }).then((hasil) => {
+                        if (!hasil.isConfirmed) return;
+                        form.dataset.yakin = '1';
+                        form.submit();
+                    });
                 });
             }
         });

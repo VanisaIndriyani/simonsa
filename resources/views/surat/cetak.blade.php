@@ -119,7 +119,7 @@
                 <div>&nbsp;</div>
                 <div>Bagian Keamanan Pondok</div>
                 <div class="ruang"></div>
-                <div class="nama">({{ $surat->pengguna->nama_user }})</div>
+                <div class="nama">(.................................)</div>
             </div>
         </div>
         <p class="tembusan">Tembusan: Orang tua/wali santri (apabila diperlukan).</p>
